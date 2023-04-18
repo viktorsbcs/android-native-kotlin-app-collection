@@ -5,24 +5,33 @@ import com.example.shoppingbasketapp.domain.ShopItem
 
 class ShopListRepository : IShopListRepository {
 
+    private var _currentId = 0
+    private val _shopList = mutableListOf<ShopItem>()
+
     override fun addShopItemUseCase(shopItem: ShopItem) {
-        TODO("Not yet implemented")
+        if(shopItem.id == ShopItem.UNDEFINED_ID){
+            shopItem.id = _currentId++
+        }
+        _shopList.add(shopItem)
     }
 
     override fun deleteShopItemUseCase(shopItem: ShopItem) {
-        TODO("Not yet implemented")
+        _shopList.remove(shopItem)
     }
 
     override fun editShopItem(shopItem: ShopItem) {
-        TODO("Not yet implemented")
+        var oldShopItem = getShopItem(shopItem.id)
+
+        _shopList.remove(oldShopItem)
+        _shopList.add(shopItem)
     }
 
     override fun getShopItem(shopItemId: Int): ShopItem {
-        TODO("Not yet implemented")
+        return _shopList.find {it.id == shopItemId} ?: throw java.lang.RuntimeException("ShopItem Id not found")
     }
 
     override fun getShopList(): List<ShopItem> {
-        TODO("Not yet implemented")
+        return _shopList.toList()
     }
 
 }
