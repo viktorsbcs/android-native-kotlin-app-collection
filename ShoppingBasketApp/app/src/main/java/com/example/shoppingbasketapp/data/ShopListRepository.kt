@@ -8,6 +8,12 @@ class ShopListRepository : IShopListRepository {
     private var _currentId = 0
     private val _shopList = mutableListOf<ShopItem>()
 
+    init {
+
+        addShopItemUseCase(ShopItem("Book", 3, true ))
+        addShopItemUseCase(ShopItem("Journal", 1, true ))
+        addShopItemUseCase(ShopItem("Stickers", 12, true ))
+    }
     override fun addShopItemUseCase(shopItem: ShopItem) {
         if(shopItem.id == ShopItem.UNDEFINED_ID){
             shopItem.id = _currentId++
